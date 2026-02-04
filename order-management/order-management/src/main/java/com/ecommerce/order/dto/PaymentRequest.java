@@ -13,8 +13,7 @@ public class PaymentRequest {
     @NotBlank(message = "Card number is required")
     private String cardNumber;
     
-    @NotBlank(message = "Card holder name is required")
-    private String cardHolderName;
+    private String cardHolderName;  // Optional
     
     @NotBlank(message = "Expiry date is required")
     private String expiryDate;

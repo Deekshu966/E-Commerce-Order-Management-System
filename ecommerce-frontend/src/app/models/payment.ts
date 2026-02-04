@@ -1,10 +1,10 @@
 export interface PaymentRequest {
   orderId: number;
   cardNumber: string;
-  cardHolderName: string;
+  cardHolderName?: string;
   expiryDate: string;
   cvv: string;
-  amount: number;
+  amount?: number;
 }
 
 export interface PaymentResponse {

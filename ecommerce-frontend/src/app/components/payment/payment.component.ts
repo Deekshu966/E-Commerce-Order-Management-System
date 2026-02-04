@@ -141,7 +141,7 @@ export class PaymentComponent implements OnInit {
         city: this.shippingAddress.city,
         state: this.shippingAddress.state,
         zipCode: this.shippingAddress.zipCode,
-        country: this.shippingAddress.country || 'USA'
+        country: this.shippingAddress.country || 'India'
       },
       items: this.cartItems.map(item => ({
         productId: item.product.productId,
@@ -149,18 +149,39 @@ export class PaymentComponent implements OnInit {
       }))
     };
 
+    // Step 1: Create the order
     this.orderService.createOrder(orderRequest).subscribe({
       next: (order) => {
         this.orderId = order.orderId;
-        this.orderPlaced = true;
-        this.isProcessing = false;
-        this.cartService.clearCart();
-        if (isPlatformBrowser(this.platformId)) {
-          sessionStorage.removeItem('shippingAddress');
-        }
+        
+        // Step 2: Process payment
+        const paymentRequest = {
+          orderId: order.orderId,
+          cardNumber: this.paymentInfo.cardNumber.replace(/\s/g, ''),
+          expiryDate: this.paymentInfo.expiryDate,
+          cvv: this.paymentInfo.cvv
+        };
+
+        this.paymentService.processPayment(paymentRequest).subscribe({
+          next: (paymentResponse) => {
+            console.log('Payment successful:', paymentResponse);
+            this.orderPlaced = true;
+            this.isProcessing = false;
+            this.cartService.clearCart();
+            if (isPlatformBrowser(this.platformId)) {
+              sessionStorage.removeItem('shippingAddress');
+            }
+          },
+          error: (paymentError) => {
+            console.error('Payment failed:', paymentError);
+            this.errorMessage = paymentError.error?.message || 'Payment failed. Please try again.';
+            this.isProcessing = false;
+          }
+        });
       },
       error: (error) => {
-        this.errorMessage = 'Failed to place order. Please try again.';
+        console.error('Order creation failed:', error);
+        this.errorMessage = error.error?.message || 'Failed to place order. Please try again.';
         this.isProcessing = false;
       }
     });
