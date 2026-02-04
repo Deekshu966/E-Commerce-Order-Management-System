@@ -22,6 +22,12 @@
           My Orders
         </a>
       </li>
+      <!-- Admin Link - Only visible to admins -->
+      <li *ngIf="isAdmin()">
+        <a routerLink="/admin" routerLinkActive="active" class="admin-link">
+          🛡️ Admin
+        </a>
+      </li>
     </ul>
 
     <div class="nav-actions">
@@ -35,6 +41,7 @@
       <div class="user-menu">
         <span class="user-name" *ngIf="authService.getCurrentUser()">
           {{ authService.getCurrentUser()?.firstName }}
+          <span class="user-role" *ngIf="isAdmin()">(Admin)</span>
         </span>
         <button class="btn btn-outline btn-sm" (click)="logout()">
           Logout

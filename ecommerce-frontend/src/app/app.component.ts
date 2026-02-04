@@ -19,6 +19,11 @@ export class AppComponent {
     private router: Router
   ) {}
 
+  isAdmin(): boolean {
+    const user = this.authService.getCurrentUser();
+    return user?.role === 'ADMIN';
+  }
+
   logout(): void {
     this.authService.logout();
     this.cartService.clearCart();

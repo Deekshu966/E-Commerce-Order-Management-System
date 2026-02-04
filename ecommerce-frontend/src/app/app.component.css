@@ -52,6 +52,23 @@
   background-color: rgba(52, 152, 219, 0.1);
 }
 
+.admin-link {
+  background: linear-gradient(135deg, #9b59b6, #667eea) !important;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.admin-link:hover {
+  opacity: 0.9;
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: #9b59b6;
+  font-weight: 600;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;

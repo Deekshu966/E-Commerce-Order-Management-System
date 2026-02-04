@@ -1,0 +1,91 @@
+<div class="admin-orders">
+  <div class="container">
+    <div class="page-header">
+      <div class="header-left">
+        <a routerLink="/admin" class="back-link">← Back to Dashboard</a>
+        <h1>📋 Order Management</h1>
+      </div>
+    </div>
+
+    <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <label>Filter by Status:</label>
+      <select [(ngModel)]="selectedStatus" (change)="onStatusFilterChange()">
+        <option *ngFor="let status of statuses" [value]="status">
+          {{ status === 'ALL' ? 'All Orders' : status }}
+        </option>
+      </select>
+      <span class="order-count">{{ filteredOrders.length }} orders</span>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="isLoading">Loading orders...</div>
+
+    <!-- Orders Table -->
+    <div class="orders-table" *ngIf="!isLoading && filteredOrders.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Order Date</th>
+            <th>Shipped</th>
+            <th>Delivered</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of filteredOrders">
+            <td><strong>#{{ order.orderId }}</strong></td>
+            <td>
+              <div class="customer-info">
+                <span class="username">{{ order.username }}</span>
+                <small>ID: {{ order.userId }}</small>
+              </div>
+            </td>
+            <td>
+              <span class="status-badge" [class]="getStatusClass(order.status)">
+                {{ order.status }}
+              </span>
+            </td>
+            <td class="amount">{{ order.totalAmount | currency }}</td>
+            <td>{{ formatDate(order.orderDate) }}</td>
+            <td>{{ formatDate(order.shippedDate!) }}</td>
+            <td>{{ formatDate(order.deliveredDate!) }}</td>
+            <td class="actions">
+              <a [routerLink]="['/admin/orders', order.orderId]" class="btn-view">
+                View
+              </a>
+              
+              <!-- Update Status Buttons -->
+              <div class="status-actions" *ngIf="getNextStatus(order.status)">
+                <button 
+                  class="btn-update"
+                  (click)="updateOrderStatus(order, getNextStatus(order.status)!)">
+                  Mark {{ getNextStatus(order.status) }}
+                </button>
+              </div>
+              
+              <button 
+                *ngIf="order.status !== 'CANCELLED' && order.status !== 'DELIVERED'"
+                class="btn-cancel"
+                (click)="updateOrderStatus(order, 'CANCELLED')">
+                Cancel
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No Orders -->
+    <div class="no-orders" *ngIf="!isLoading && filteredOrders.length === 0">
+      <p>No orders found{{ selectedStatus !== 'ALL' ? ' with status ' + selectedStatus : '' }}.</p>
+    </div>
+  </div>
+</div>

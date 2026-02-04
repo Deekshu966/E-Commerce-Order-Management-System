@@ -32,46 +32,23 @@ export class PaymentService {
     return this.http.post<PaymentResponse>(`${this.apiUrl}/${paymentId}/refund`, {});
   }
 
-  // Validate card number (Luhn algorithm - client-side validation)
+  // Validate card number - accepts any 13-19 digit number (mock validation)
   validateCardNumber(cardNumber: string): boolean {
     const cleaned = cardNumber.replace(/\s/g, '');
-    if (!/^\d{13,19}$/.test(cleaned)) return false;
-
-    let sum = 0;
-    let isEven = false;
-
-    for (let i = cleaned.length - 1; i >= 0; i--) {
-      let digit = parseInt(cleaned[i], 10);
-
-      if (isEven) {
-        digit *= 2;
-        if (digit > 9) digit -= 9;
-      }
-
-      sum += digit;
-      isEven = !isEven;
-    }
-
-    return sum % 10 === 0;
+    // Only check if it's all digits and has valid length
+    return /^\d{13,19}$/.test(cleaned);
   }
 
-  // Validate expiry date
+  // Validate expiry date - accepts any valid format MM/YY (mock validation)
   validateExpiryDate(expiryDate: string): boolean {
     const [month, year] = expiryDate.split('/').map(s => parseInt(s, 10));
     if (!month || !year) return false;
+    // Only check valid month range, accept any year
     if (month < 1 || month > 12) return false;
-
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear() % 100;
-    const currentMonth = currentDate.getMonth() + 1;
-
-    if (year < currentYear) return false;
-    if (year === currentYear && month < currentMonth) return false;
-
     return true;
   }
 
-  // Validate CVV
+  // Validate CVV - accepts any 3-4 digit number
   validateCVV(cvv: string): boolean {
     return /^\d{3,4}$/.test(cvv);
   }

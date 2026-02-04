@@ -1,0 +1,118 @@
+<div class="admin-dashboard">
+  <div class="container">
+    <div class="page-header">
+      <h1>🛡️ Admin Dashboard</h1>
+      <p class="subtitle">Manage orders and view statistics</p>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+    <!-- Statistics Cards -->
+    <div class="stats-grid" *ngIf="stats">
+      <div class="stat-card total">
+        <div class="stat-icon">📦</div>
+        <div class="stat-content">
+          <h3>{{ stats.totalOrders }}</h3>
+          <p>Total Orders</p>
+        </div>
+      </div>
+
+      <div class="stat-card users">
+        <div class="stat-icon">👥</div>
+        <div class="stat-content">
+          <h3>{{ stats.totalUsers }}</h3>
+          <p>Total Users</p>
+        </div>
+      </div>
+
+      <div class="stat-card placed">
+        <div class="stat-icon">🆕</div>
+        <div class="stat-content">
+          <h3>{{ stats.placedOrders }}</h3>
+          <p>New Orders</p>
+        </div>
+      </div>
+
+      <div class="stat-card processing">
+        <div class="stat-icon">⚙️</div>
+        <div class="stat-content">
+          <h3>{{ stats.processingOrders }}</h3>
+          <p>Processing</p>
+        </div>
+      </div>
+
+      <div class="stat-card shipped">
+        <div class="stat-icon">🚚</div>
+        <div class="stat-content">
+          <h3>{{ stats.shippedOrders }}</h3>
+          <p>Shipped</p>
+        </div>
+      </div>
+
+      <div class="stat-card delivered">
+        <div class="stat-icon">✅</div>
+        <div class="stat-content">
+          <h3>{{ stats.deliveredOrders }}</h3>
+          <p>Delivered</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <a routerLink="/admin/orders" class="action-btn">
+        📋 Manage All Orders
+      </a>
+      <a routerLink="/admin/users" class="action-btn">
+        👥 View All Users
+      </a>
+    </div>
+
+    <!-- Recent Orders Table -->
+    <div class="recent-orders">
+      <div class="section-header">
+        <h2>Recent Orders</h2>
+        <a routerLink="/admin/orders" class="view-all">View All →</a>
+      </div>
+
+      <div class="loading" *ngIf="isLoading">Loading orders...</div>
+
+      <div class="orders-table" *ngIf="!isLoading && recentOrders.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of recentOrders">
+              <td><strong>#{{ order.orderId }}</strong></td>
+              <td>{{ order.username }}</td>
+              <td>
+                <span class="status-badge" [class]="getStatusClass(order.status)">
+                  {{ order.status }}
+                </span>
+              </td>
+              <td>{{ order.totalAmount | currency }}</td>
+              <td>{{ formatDate(order.orderDate) }}</td>
+              <td>
+                <a [routerLink]="['/admin/orders', order.orderId]" class="btn-view">
+                  View Details
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="no-orders" *ngIf="!isLoading && recentOrders.length === 0">
+        <p>No orders found.</p>
+      </div>
+    </div>
+  </div>
+</div>

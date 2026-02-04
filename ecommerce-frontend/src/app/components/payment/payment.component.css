@@ -94,6 +94,13 @@
   gap: 1rem;
 }
 
+.form-hint {
+  display: block;
+  color: var(--gray-color);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
 /* Shipping Summary */
 .shipping-summary {
   margin-top: 2rem;

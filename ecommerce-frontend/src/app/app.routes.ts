@@ -8,7 +8,12 @@ import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
+import { AdminOrderDetailComponent } from './components/admin-order-detail/admin-order-detail.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { authGuard } from './guards/auth.guard';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -20,5 +25,12 @@ export const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
   { path: 'payment', component: PaymentComponent, canActivate: [authGuard] },
   { path: 'orders', component: OrderHistoryComponent, canActivate: [authGuard] },
+  
+  // Admin routes
+  { path: 'admin', component: AdminDashboardComponent, canActivate: [authGuard, adminGuard] },
+  { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [authGuard, adminGuard] },
+  { path: 'admin/orders/:id', component: AdminOrderDetailComponent, canActivate: [authGuard, adminGuard] },
+  { path: 'admin/users', component: AdminUsersComponent, canActivate: [authGuard, adminGuard] },
+  
   { path: '**', redirectTo: '' }
 ];

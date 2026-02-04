@@ -1,0 +1,49 @@
+<div class="admin-users">
+  <div class="container">
+    <div class="page-header">
+      <a routerLink="/admin" class="back-link">← Back to Dashboard</a>
+      <h1>👥 User Management</h1>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+    <div class="loading" *ngIf="isLoading">Loading users...</div>
+
+    <div class="users-table" *ngIf="!isLoading && users.length > 0">
+      <div class="table-header">
+        <span class="user-count">{{ users.length }} users total</span>
+      </div>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.userId }}</td>
+            <td><strong>{{ user.username }}</strong></td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.phone || '-' }}</td>
+            <td>
+              <span class="role-badge" [class]="getRoleClass(user.role)">
+                {{ user.role }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="no-users" *ngIf="!isLoading && users.length === 0">
+      <p>No users found.</p>
+    </div>
+  </div>
+</div>

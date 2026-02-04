@@ -1,0 +1,103 @@
+.admin-users {
+  padding: 40px 0;
+  min-height: calc(100vh - 130px);
+  background: #f5f7fa;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.back-link {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 0.875rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.alert-danger {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.loading, .no-users {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  color: #666;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.users-table {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+.table-header {
+  margin-bottom: 1rem;
+}
+
+.user-count {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #666;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+tr:hover {
+  background: #f8f9fa;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.role-admin {
+  background: #9b59b6;
+  color: white;
+}
+
+.role-user {
+  background: #3498db;
+  color: white;
+}

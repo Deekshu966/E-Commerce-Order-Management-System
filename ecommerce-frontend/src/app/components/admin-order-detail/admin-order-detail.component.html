@@ -1,0 +1,131 @@
+<div class="admin-order-detail">
+  <div class="container">
+    <div class="page-header">
+      <a routerLink="/admin/orders" class="back-link">← Back to Orders</a>
+      <h1 *ngIf="order">Order #{{ order.orderId }}</h1>
+    </div>
+
+    <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+    <div class="loading" *ngIf="isLoading">Loading order details...</div>
+
+    <div class="order-content" *ngIf="!isLoading && order">
+      <!-- Order Status Card -->
+      <div class="status-card">
+        <div class="status-header">
+          <h2>Order Status</h2>
+          <span class="status-badge" [class]="getStatusClass(order.status)">
+            {{ order.status }}
+          </span>
+        </div>
+        
+        <div class="status-timeline">
+          <div class="timeline-item" [class.active]="true">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <strong>Order Placed</strong>
+              <span>{{ formatDate(order.orderDate) }}</span>
+            </div>
+          </div>
+          
+          <div class="timeline-item" [class.active]="order.status !== 'PLACED' && order.status !== 'CANCELLED'">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <strong>Processing</strong>
+            </div>
+          </div>
+          
+          <div class="timeline-item" [class.active]="order.status === 'SHIPPED' || order.status === 'DELIVERED'">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <strong>Shipped</strong>
+              <span *ngIf="order.shippedDate">{{ formatDate(order.shippedDate) }}</span>
+            </div>
+          </div>
+          
+          <div class="timeline-item" [class.active]="order.status === 'DELIVERED'">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <strong>Delivered</strong>
+              <span *ngIf="order.deliveredDate">{{ formatDate(order.deliveredDate) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="status-actions" *ngIf="order.status !== 'DELIVERED' && order.status !== 'CANCELLED'">
+          <button 
+            *ngIf="getNextStatus()"
+            class="btn-primary"
+            (click)="updateStatus(getNextStatus()!)">
+            Mark as {{ getNextStatus() }}
+          </button>
+          <button 
+            class="btn-danger"
+            (click)="updateStatus('CANCELLED')">
+            Cancel Order
+          </button>
+        </div>
+      </div>
+
+      <!-- Customer Info -->
+      <div class="info-card">
+        <h3>Customer Information</h3>
+        <div class="info-row">
+          <span class="label">Customer ID:</span>
+          <span>{{ order.userId }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Username:</span>
+          <span>{{ order.username }}</span>
+        </div>
+      </div>
+
+      <!-- Shipping Address -->
+      <div class="info-card">
+        <h3>Shipping Address</h3>
+        <p>{{ order.shippingAddress || 'No address provided' }}</p>
+      </div>
+
+      <!-- Order Items -->
+      <div class="items-card">
+        <h3>Order Items</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of order.items">
+              <td>{{ item.productName }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.unitPrice | currency }}</td>
+              <td>{{ item.quantity * item.unitPrice | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="summary-card">
+        <h3>Order Summary</h3>
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <span>{{ order.totalAmount - order.taxAmount | currency }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax:</span>
+          <span>{{ order.taxAmount | currency }}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span>
+          <span>{{ order.totalAmount | currency }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

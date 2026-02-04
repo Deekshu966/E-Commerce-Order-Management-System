@@ -86,36 +86,40 @@ export class PaymentComponent implements OnInit {
     this.paymentInfo.expiryDate = value;
   }
 
+  formatCVV(event: any): void {
+    // Only allow digits
+    let value = event.target.value.replace(/\D/g, '');
+    this.paymentInfo.cvv = value.substring(0, 4);
+  }
+
   validatePayment(): boolean {
     const cleanCardNumber = this.paymentInfo.cardNumber.replace(/\s/g, '');
     
+    // Only check that card number contains digits and has minimum length
     if (!cleanCardNumber || cleanCardNumber.length < 13) {
-      this.errorMessage = 'Please enter a valid card number';
+      this.errorMessage = 'Please enter a card number (minimum 13 digits)';
       return false;
     }
 
-    if (!this.paymentService.validateCardNumber(cleanCardNumber)) {
-      this.errorMessage = 'Invalid card number';
+    // Check if card number contains only digits
+    if (!/^\d+$/.test(cleanCardNumber)) {
+      this.errorMessage = 'Card number must contain only numbers';
       return false;
     }
 
-    if (!this.paymentInfo.cardHolderName) {
+    if (!this.paymentInfo.cardHolderName || this.paymentInfo.cardHolderName.trim().length < 2) {
       this.errorMessage = 'Please enter the cardholder name';
       return false;
     }
 
-    if (!this.paymentInfo.expiryDate) {
-      this.errorMessage = 'Please enter the expiry date';
+    if (!this.paymentInfo.expiryDate || this.paymentInfo.expiryDate.length < 5) {
+      this.errorMessage = 'Please enter expiry date (MM/YY)';
       return false;
     }
 
-    if (!this.paymentService.validateExpiryDate(this.paymentInfo.expiryDate)) {
-      this.errorMessage = 'Invalid or expired card';
-      return false;
-    }
-
-    if (!this.paymentInfo.cvv || !this.paymentService.validateCVV(this.paymentInfo.cvv)) {
-      this.errorMessage = 'Please enter a valid CVV';
+    // CVV must be 3-4 digits
+    if (!this.paymentInfo.cvv || !/^\d{3,4}$/.test(this.paymentInfo.cvv)) {
+      this.errorMessage = 'Please enter a valid CVV (3-4 digits)';
       return false;
     }
 
