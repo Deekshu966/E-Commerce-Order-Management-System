@@ -1,0 +1,110 @@
+<div class="cart-container">
+  <div class="container">
+    <div class="page-header">
+      <h1>Shopping Cart</h1>
+      <p *ngIf="cartItems.length > 0">{{ cartItems.length }} item(s) in your cart</p>
+    </div>
+
+    <!-- Empty Cart -->
+    <div class="empty-cart" *ngIf="cartItems.length === 0">
+      <div class="empty-cart-icon">🛒</div>
+      <h2>Your cart is empty</h2>
+      <p>Looks like you haven't added any items to your cart yet.</p>
+      <a routerLink="/products" class="btn btn-primary btn-lg">
+        Start Shopping
+      </a>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="cart-content" *ngIf="cartItems.length > 0">
+      <div class="cart-items">
+        <div class="cart-header">
+          <span class="col-product">Product</span>
+          <span class="col-price">Price</span>
+          <span class="col-quantity">Quantity</span>
+          <span class="col-subtotal">Subtotal</span>
+          <span class="col-action"></span>
+        </div>
+
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <div class="col-product">
+            <a [routerLink]="['/products', item.product.productId]" class="product-image">
+              <img [src]="item.product.image" [alt]="item.product.name" />
+            </a>
+            <div class="product-details">
+              <a [routerLink]="['/products', item.product.productId]" class="product-name">
+                {{ item.product.name }}
+              </a>
+              <span class="stock-info" *ngIf="item.product.stock <= 5">
+                Only {{ item.product.stock }} left
+              </span>
+            </div>
+          </div>
+          
+          <div class="col-price">
+            <span class="price">${{ item.product.price.toFixed(2) }}</span>
+          </div>
+          
+          <div class="col-quantity">
+            <div class="quantity-input">
+              <button (click)="decrementQuantity(item)" [disabled]="item.quantity <= 1">-</button>
+              <input type="number" [value]="item.quantity" readonly />
+              <button (click)="incrementQuantity(item)" [disabled]="item.quantity >= item.product.stock">+</button>
+            </div>
+          </div>
+          
+          <div class="col-subtotal">
+            <span class="price">${{ getItemSubtotal(item).toFixed(2) }}</span>
+          </div>
+          
+          <div class="col-action">
+            <button class="remove-btn" (click)="removeItem(item.product.productId)">
+              🗑️
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="cart-summary">
+        <div class="summary-card">
+          <h3>Order Summary</h3>
+          
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>${{ getCartTotal().toFixed(2) }}</span>
+          </div>
+          
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span>Free</span>
+          </div>
+          
+          <div class="summary-row">
+            <span>Tax</span>
+            <span>${{ (getCartTotal() * 0.08).toFixed(2) }}</span>
+          </div>
+          
+          <div class="summary-divider"></div>
+          
+          <div class="summary-row total">
+            <span>Total</span>
+            <span>${{ (getCartTotal() * 1.08).toFixed(2) }}</span>
+          </div>
+
+          <a routerLink="/checkout" class="btn btn-primary btn-block">
+            Proceed to Checkout
+          </a>
+          
+          <a routerLink="/products" class="continue-shopping">
+            Continue Shopping
+          </a>
+        </div>
+
+        <button class="btn btn-outline clear-cart-btn" (click)="clearCart()">
+          Clear Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

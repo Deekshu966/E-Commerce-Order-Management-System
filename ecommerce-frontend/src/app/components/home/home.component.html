@@ -1,0 +1,77 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome, {{ userName }}!</h1>
+      <p>Discover amazing products at great prices</p>
+      <a routerLink="/products" class="btn btn-primary btn-lg">
+        Shop Now
+      </a>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="quick-actions">
+    <div class="container">
+      <div class="action-cards">
+        <a routerLink="/products" class="action-card">
+          <span class="action-icon">🛍️</span>
+          <h3>Browse Products</h3>
+          <p>Explore our catalog</p>
+        </a>
+        <a routerLink="/cart" class="action-card">
+          <span class="action-icon">🛒</span>
+          <h3>View Cart</h3>
+          <p>Check your items</p>
+        </a>
+        <a routerLink="/orders" class="action-card">
+          <span class="action-icon">📦</span>
+          <h3>My Orders</h3>
+          <p>Track your orders</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="featured-products">
+    <div class="container">
+      <div class="section-header">
+        <h2>Featured Products</h2>
+        <a routerLink="/products" class="view-all">View All →</a>
+      </div>
+
+      <div class="loading" *ngIf="isLoading">
+        <div class="spinner"></div>
+      </div>
+
+      <div class="products-grid" *ngIf="!isLoading">
+        <div class="product-card" *ngFor="let product of featuredProducts">
+          <a [routerLink]="['/products', product.productId]" class="product-image">
+            <img [src]="product.image" [alt]="product.name" />
+          </a>
+          <div class="product-info">
+            <h3>
+              <a [routerLink]="['/products', product.productId]">{{ product.name }}</a>
+            </h3>
+            <p class="product-description">{{ product.description | slice:0:60 }}...</p>
+            <div class="product-footer">
+              <span class="price">${{ product.price.toFixed(2) }}</span>
+              <button 
+                class="btn btn-primary btn-sm" 
+                (click)="addToCart(product)"
+                [disabled]="product.stock === 0"
+              >
+                {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="!isLoading && featuredProducts.length === 0">
+        <p>No products available at the moment.</p>
+      </div>
+    </div>
+  </section>
+</div>

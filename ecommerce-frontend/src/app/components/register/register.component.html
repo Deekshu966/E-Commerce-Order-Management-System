@@ -1,0 +1,134 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <div class="logo">🛒</div>
+      <h1>Create Account</h1>
+      <p>Join E-Shop today</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="register-form">
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            class="form-control"
+            [(ngModel)]="formData.firstName"
+            name="firstName"
+            placeholder="First name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            class="form-control"
+            [(ngModel)]="formData.lastName"
+            name="lastName"
+            placeholder="Last name"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="username" class="form-label">Username *</label>
+        <input
+          type="text"
+          id="username"
+          class="form-control"
+          [(ngModel)]="formData.username"
+          name="username"
+          placeholder="Choose a username"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email *</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="formData.email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password" class="form-label">Password *</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            [(ngModel)]="formData.password"
+            name="password"
+            placeholder="Create password"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirm Password *</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            class="form-control"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm password"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone" class="form-label">Phone</label>
+        <input
+          type="tel"
+          id="phone"
+          class="form-control"
+          [(ngModel)]="formData.phone"
+          name="phone"
+          placeholder="Enter phone number"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="address" class="form-label">Address</label>
+        <textarea
+          id="address"
+          class="form-control"
+          [(ngModel)]="formData.address"
+          name="address"
+          placeholder="Enter your address"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-block"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">Create Account</span>
+        <span *ngIf="isLoading">Creating account...</span>
+      </button>
+    </form>
+
+    <div class="register-footer">
+      <p>Already have an account? <a routerLink="/">Sign in</a></p>
+    </div>
+  </div>
+</div>

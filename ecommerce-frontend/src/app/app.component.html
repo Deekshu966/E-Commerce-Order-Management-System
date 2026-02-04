@@ -1,0 +1,57 @@
+<!-- Navigation -->
+<nav class="navbar" *ngIf="authService.isLoggedIn()">
+  <div class="nav-container">
+    <a routerLink="/home" class="nav-brand">
+      <span class="brand-icon">🛒</span>
+      <span class="brand-text">E-Shop</span>
+    </a>
+    
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          Home
+        </a>
+      </li>
+      <li>
+        <a routerLink="/products" routerLinkActive="active">
+          Products
+        </a>
+      </li>
+      <li>
+        <a routerLink="/orders" routerLinkActive="active">
+          My Orders
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a routerLink="/cart" class="cart-icon" routerLinkActive="active">
+        <span class="cart-emoji">🛒</span>
+        <span class="cart-count" *ngIf="cartService.getCartItemCount() > 0">
+          {{ cartService.getCartItemCount() }}
+        </span>
+      </a>
+      
+      <div class="user-menu">
+        <span class="user-name" *ngIf="authService.getCurrentUser()">
+          {{ authService.getCurrentUser()?.firstName }}
+        </span>
+        <button class="btn btn-outline btn-sm" (click)="logout()">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main [class.with-nav]="authService.isLoggedIn()">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Footer -->
+<footer class="footer" *ngIf="authService.isLoggedIn()">
+  <div class="footer-container">
+    <p>&copy; 2026 E-Commerce Order Management System. All rights reserved.</p>
+  </div>
+</footer>

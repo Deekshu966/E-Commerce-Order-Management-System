@@ -1,0 +1,93 @@
+<div class="product-list-container">
+  <div class="container">
+    <div class="page-header">
+      <h1>Our Products</h1>
+      <p>Browse our complete collection of products</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-bar">
+      <div class="search-box">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search products..."
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+        />
+      </div>
+      
+      <div class="filter-options">
+        <select 
+          class="form-control"
+          [(ngModel)]="priceFilter"
+          (change)="onPriceFilterChange()"
+        >
+          <option value="all">All Prices</option>
+          <option value="under25">Under $25</option>
+          <option value="25to50">$25 - $50</option>
+          <option value="50to100">$50 - $100</option>
+          <option value="over100">Over $100</option>
+        </select>
+
+        <select 
+          class="form-control"
+          [(ngModel)]="sortOption"
+          (change)="onSortChange()"
+        >
+          <option value="name">Sort by Name</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="isLoading">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Results Count -->
+    <div class="results-info" *ngIf="!isLoading">
+      <p>Showing {{ filteredProducts.length }} of {{ products.length }} products</p>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" *ngIf="!isLoading">
+      <div class="product-card" *ngFor="let product of filteredProducts">
+        <a [routerLink]="['/products', product.productId]" class="product-image">
+          <img [src]="product.image" [alt]="product.name" />
+          <span class="stock-badge" *ngIf="product.stock === 0">Out of Stock</span>
+          <span class="stock-badge low" *ngIf="product.stock > 0 && product.stock <= 5">
+            Only {{ product.stock }} left
+          </span>
+        </a>
+        <div class="product-info">
+          <h3>
+            <a [routerLink]="['/products', product.productId]">{{ product.name }}</a>
+          </h3>
+          <p class="product-description">{{ product.description | slice:0:80 }}...</p>
+          <div class="product-footer">
+            <span class="price">${{ product.price.toFixed(2) }}</span>
+            <button 
+              class="btn btn-sm"
+              [class.btn-primary]="!isInCart(product.productId)"
+              [class.btn-secondary]="isInCart(product.productId)"
+              (click)="addToCart(product)"
+              [disabled]="product.stock === 0"
+            >
+              {{ product.stock === 0 ? 'Out of Stock' : isInCart(product.productId) ? '✓ In Cart' : 'Add to Cart' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && filteredProducts.length === 0">
+      <div class="empty-state-icon">🔍</div>
+      <h3>No products found</h3>
+      <p>Try adjusting your search or filter criteria</p>
+    </div>
+  </div>
+</div>
