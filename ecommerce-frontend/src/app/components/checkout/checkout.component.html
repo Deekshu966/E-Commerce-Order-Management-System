@@ -40,25 +40,14 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Email *</label>
-              <input 
-                type="email" 
-                class="form-control"
-                [(ngModel)]="shippingAddress.email"
-                placeholder="Email address"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Phone</label>
-              <input 
-                type="tel" 
-                class="form-control"
-                [(ngModel)]="shippingAddress.phone"
-                placeholder="Phone number"
-              />
-            </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input 
+              type="email" 
+              class="form-control"
+              [(ngModel)]="shippingAddress.email"
+              placeholder="Email address"
+            />
           </div>
 
           <div class="form-group">
@@ -99,15 +88,6 @@
                 placeholder="ZIP Code"
               />
             </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Country *</label>
-            <select class="form-control" [(ngModel)]="shippingAddress.country">
-              <option value="USA">United States</option>
-              <option value="CAN">Canada</option>
-              <option value="UK">United Kingdom</option>
-            </select>
           </div>
         </div>
       </div>

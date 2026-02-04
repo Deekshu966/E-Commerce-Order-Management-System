@@ -19,14 +19,11 @@ export class CheckoutComponent implements OnInit {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
     address: '',
     city: '',
     state: '',
-    zipCode: '',
-    country: 'USA'
+    zipCode: ''
   };
-  sameAsBilling = true;
   errorMessage = '';
 
   constructor(
@@ -49,8 +46,6 @@ export class CheckoutComponent implements OnInit {
       this.shippingAddress.firstName = user.firstName;
       this.shippingAddress.lastName = user.lastName;
       this.shippingAddress.email = user.email;
-      this.shippingAddress.phone = user.phone;
-      this.shippingAddress.address = user.address;
     }
   }
 

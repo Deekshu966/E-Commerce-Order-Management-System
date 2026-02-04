@@ -21,7 +21,6 @@ export class PaymentComponent implements OnInit {
   
   paymentInfo = {
     cardNumber: '',
-    cardHolderName: '',
     expiryDate: '',
     cvv: ''
   };
@@ -107,11 +106,6 @@ export class PaymentComponent implements OnInit {
       return false;
     }
 
-    if (!this.paymentInfo.cardHolderName || this.paymentInfo.cardHolderName.trim().length < 2) {
-      this.errorMessage = 'Please enter the cardholder name';
-      return false;
-    }
-
     if (!this.paymentInfo.expiryDate || this.paymentInfo.expiryDate.length < 5) {
       this.errorMessage = 'Please enter expiry date (MM/YY)';
       return false;
@@ -138,7 +132,17 @@ export class PaymentComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     const orderRequest = {
       userId: user?.userId || 0,
-      shippingAddress: `${this.shippingAddress.address}, ${this.shippingAddress.city}, ${this.shippingAddress.state} ${this.shippingAddress.zipCode}`,
+      shippingAddress: {
+        firstName: this.shippingAddress.firstName,
+        lastName: this.shippingAddress.lastName,
+        email: this.shippingAddress.email,
+        phone: this.shippingAddress.phone || '',
+        address: this.shippingAddress.address,
+        city: this.shippingAddress.city,
+        state: this.shippingAddress.state,
+        zipCode: this.shippingAddress.zipCode,
+        country: this.shippingAddress.country || 'USA'
+      },
       items: this.cartItems.map(item => ({
         productId: item.product.productId,
         quantity: item.quantity

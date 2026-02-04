@@ -20,9 +20,21 @@ export interface OrderItem {
 
 export type OrderStatus = 'PLACED' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
 
+export interface ShippingAddress {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country?: string;
+}
+
 export interface CreateOrderRequest {
   userId: number;
-  shippingAddress: string;
+  shippingAddress: ShippingAddress;
   items: {
     productId: number;
     quantity: number;
