@@ -68,7 +68,7 @@
           </h3>
           <p class="product-description">{{ product.description | slice:0:80 }}...</p>
           <div class="product-footer">
-            <span class="price">${{ product.price.toFixed(2) }}</span>
+            <span class="price">₹{{ product.price.toFixed(2) }}</span>
             <button 
               class="btn btn-sm"
               [class.btn-primary]="!isInCart(product.productId)"

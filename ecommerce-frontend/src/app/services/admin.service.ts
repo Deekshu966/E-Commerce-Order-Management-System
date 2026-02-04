@@ -17,14 +17,15 @@ export interface DashboardStats {
 export interface AdminOrder {
   orderId: number;
   userId: number;
-  username: string;
+  username?: string;
+  customerName?: string;
   status: string;
   totalAmount: number;
   taxAmount: number;
   orderDate: string;
   shippedDate: string | null;
   deliveredDate: string | null;
-  shippingAddress: string;
+  shippingAddress: any;
   items?: AdminOrderItem[];
 }
 

@@ -95,4 +95,17 @@ export class AdminOrderDetailComponent implements OnInit {
       minute: '2-digit'
     });
   }
+
+  formatShippingAddress(address: any): string {
+    if (!address) return 'No address provided';
+    if (typeof address === 'string') return address;
+    const parts = [
+      address.firstName && address.lastName ? `${address.firstName} ${address.lastName}` : '',
+      address.address,
+      address.city,
+      address.state,
+      address.zipCode
+    ];
+    return parts.filter(Boolean).join(', ') || 'No address provided';
+  }
 }

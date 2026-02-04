@@ -42,7 +42,7 @@
           </div>
           
           <div class="col-price">
-            <span class="price">${{ item.product.price.toFixed(2) }}</span>
+            <span class="price">₹{{ item.product.price.toFixed(2) }}</span>
           </div>
           
           <div class="col-quantity">
@@ -54,7 +54,7 @@
           </div>
           
           <div class="col-subtotal">
-            <span class="price">${{ getItemSubtotal(item).toFixed(2) }}</span>
+            <span class="price">₹{{ getItemSubtotal(item).toFixed(2) }}</span>
           </div>
           
           <div class="col-action">
@@ -72,7 +72,7 @@
           
           <div class="summary-row">
             <span>Subtotal</span>
-            <span>${{ getCartTotal().toFixed(2) }}</span>
+            <span>₹{{ getCartTotal().toFixed(2) }}</span>
           </div>
           
           <div class="summary-row">
@@ -82,14 +82,14 @@
           
           <div class="summary-row">
             <span>Tax</span>
-            <span>${{ (getCartTotal() * 0.08).toFixed(2) }}</span>
+            <span>₹{{ (getCartTotal() * 0.08).toFixed(2) }}</span>
           </div>
           
           <div class="summary-divider"></div>
           
           <div class="summary-row total">
             <span>Total</span>
-            <span>${{ (getCartTotal() * 1.08).toFixed(2) }}</span>
+            <span>₹{{ (getCartTotal() * 1.08).toFixed(2) }}</span>
           </div>
 
           <a routerLink="/checkout" class="btn btn-primary btn-block">

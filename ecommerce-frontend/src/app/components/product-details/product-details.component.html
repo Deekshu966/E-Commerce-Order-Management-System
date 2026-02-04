@@ -26,7 +26,7 @@
         <h1>{{ product.name }}</h1>
         
         <div class="price-section">
-          <span class="price">${{ product.price.toFixed(2) }}</span>
+          <span class="price">₹{{ product.price.toFixed(2) }}</span>
         </div>
 
         <div class="stock-info" [class.in-stock]="product.stock > 0" [class.out-of-stock]="product.stock === 0">

@@ -74,18 +74,18 @@
         </div>
 
         <div class="order-items-preview">
-          <div class="item-preview" *ngFor="let item of order.orderItems.slice(0, 3)">
+          <div class="item-preview" *ngFor="let item of order.items?.slice(0, 3)">
             <img [src]="item.productImage" [alt]="item.productName" />
           </div>
-          <div class="more-items" *ngIf="order.orderItems.length > 3">
-            +{{ order.orderItems.length - 3 }} more
+          <div class="more-items" *ngIf="(order.items?.length || 0) > 3">
+            +{{ order.items!.length - 3 }} more
           </div>
         </div>
 
         <div class="order-footer">
           <div class="order-total">
             <span>Total:</span>
-            <span class="price">${{ order.totalAmount.toFixed(2) }}</span>
+            <span class="price">₹{{ order.totalAmount.toFixed(2) }}</span>
           </div>
           <div class="order-actions">
             <button class="btn btn-outline btn-sm" (click)="viewOrderDetails(order)">
@@ -150,7 +150,7 @@
         </div>
         <div class="info-row">
           <span>Shipping Address:</span>
-          <span>{{ selectedOrder.shippingAddress }}</span>
+          <span>{{ formatShippingAddress(selectedOrder.shippingAddress) }}</span>
         </div>
       </div>
 
@@ -158,13 +158,13 @@
       <div class="order-details-section">
         <h3>Items</h3>
         <div class="order-items-list">
-          <div class="order-item" *ngFor="let item of selectedOrder.orderItems">
+          <div class="order-item" *ngFor="let item of selectedOrder.items">
             <img [src]="item.productImage" [alt]="item.productName" />
             <div class="item-info">
               <span class="item-name">{{ item.productName }}</span>
               <span class="item-qty">Qty: {{ item.quantity }}</span>
             </div>
-            <span class="item-price">${{ item.subtotal.toFixed(2) }}</span>
+            <span class="item-price">₹{{ item.subtotal.toFixed(2) }}</span>
           </div>
         </div>
       </div>
@@ -173,15 +173,15 @@
       <div class="order-total-section">
         <div class="total-row">
           <span>Subtotal</span>
-          <span>${{ (selectedOrder.totalAmount / 1.08).toFixed(2) }}</span>
+          <span>₹{{ (selectedOrder.totalAmount / 1.08).toFixed(2) }}</span>
         </div>
         <div class="total-row">
           <span>Tax</span>
-          <span>${{ (selectedOrder.totalAmount - selectedOrder.totalAmount / 1.08).toFixed(2) }}</span>
+          <span>₹{{ (selectedOrder.totalAmount - selectedOrder.totalAmount / 1.08).toFixed(2) }}</span>
         </div>
         <div class="total-row total">
           <span>Total</span>
-          <span>${{ selectedOrder.totalAmount.toFixed(2) }}</span>
+          <span>₹{{ selectedOrder.totalAmount.toFixed(2) }}</span>
         </div>
       </div>
     </div>

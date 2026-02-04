@@ -76,15 +76,15 @@
           <span>{{ order.userId }}</span>
         </div>
         <div class="info-row">
-          <span class="label">Username:</span>
-          <span>{{ order.username }}</span>
+          <span class="label">Customer Name:</span>
+          <span>{{ order.customerName || 'N/A' }}</span>
         </div>
       </div>
 
       <!-- Shipping Address -->
       <div class="info-card">
         <h3>Shipping Address</h3>
-        <p>{{ order.shippingAddress || 'No address provided' }}</p>
+        <p>{{ formatShippingAddress(order.shippingAddress) }}</p>
       </div>
 
       <!-- Order Items -->
@@ -103,8 +103,8 @@
             <tr *ngFor="let item of order.items">
               <td>{{ item.productName }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ item.unitPrice | currency }}</td>
-              <td>{{ item.quantity * item.unitPrice | currency }}</td>
+              <td>₹{{ item.unitPrice }}</td>
+              <td>₹{{ item.quantity * item.unitPrice }}</td>
             </tr>
           </tbody>
         </table>
@@ -115,15 +115,15 @@
         <h3>Order Summary</h3>
         <div class="summary-row">
           <span>Subtotal:</span>
-          <span>{{ order.totalAmount - order.taxAmount | currency }}</span>
+          <span>₹{{ order.totalAmount - (order.taxAmount || 0) }}</span>
         </div>
         <div class="summary-row">
           <span>Tax:</span>
-          <span>{{ order.taxAmount | currency }}</span>
+          <span>₹{{ order.taxAmount || 0 }}</span>
         </div>
         <div class="summary-row total">
           <span>Total:</span>
-          <span>{{ order.totalAmount | currency }}</span>
+          <span>₹{{ order.totalAmount }}</span>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth.service';
-import { Order, OrderStatus } from '../../models/order';
+import { Order, OrderStatus, ShippingAddress } from '../../models/order';
 
 @Component({
   selector: 'app-order-history',
@@ -104,5 +104,15 @@ export class OrderHistoryComponent implements OnInit {
       month: 'long',
       day: 'numeric'
     });
+  }
+
+  formatShippingAddress(address: ShippingAddress): string {
+    if (!address) return 'N/A';
+    const parts = [
+      `${address.firstName} ${address.lastName}`,
+      address.address,
+      `${address.city}, ${address.state} ${address.zipCode}`
+    ];
+    return parts.filter(Boolean).join(', ');
   }
 }

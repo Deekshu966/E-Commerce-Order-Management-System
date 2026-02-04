@@ -1,0 +1,53 @@
+============================================
+E-Commerce Application - Running Commands
+============================================
+
+PREREQUISITES:
+- MySQL Server running on port 3306
+- Database: ecommercedb (username: root, password: root@123)
+- Node.js installed
+- Java 17+ installed
+
+============================================
+1. START BACKEND (Spring Boot)
+============================================
+
+Open Terminal 1 and run:
+
+cd d:\Frontend\order-management\order-management
+.\mvnw.cmd spring-boot:run
+
+Backend will start on: http://localhost:8080
+
+============================================
+2. START FRONTEND (Angular)
+============================================
+
+Open Terminal 2 and run:
+
+cd d:\Frontend\ecommerce-frontend
+ng serve --port 4201
+
+Frontend will start on: http://localhost:4201
+
+============================================
+ACCESS THE APPLICATION
+============================================
+
+Open browser: http://localhost:4201
+
+Login Credentials:
+------------------
+| Username    | Password    | Role  |
+|-------------|-------------|-------|
+| admin       | admin123    | ADMIN |
+| john_doe    | password123 | USER  |
+| jane_smith  | password123 | USER  |
+
+============================================
+STOP THE APPLICATIONS
+============================================
+
+Press Ctrl+C in each terminal to stop the servers.
+
+============================================

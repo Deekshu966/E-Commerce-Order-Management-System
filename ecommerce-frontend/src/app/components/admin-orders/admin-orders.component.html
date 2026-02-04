@@ -44,7 +44,7 @@
             <td><strong>#{{ order.orderId }}</strong></td>
             <td>
               <div class="customer-info">
-                <span class="username">{{ order.username }}</span>
+                <span class="username">{{ order.customerName || 'N/A' }}</span>
                 <small>ID: {{ order.userId }}</small>
               </div>
             </td>
@@ -53,7 +53,7 @@
                 {{ order.status }}
               </span>
             </td>
-            <td class="amount">{{ order.totalAmount | currency }}</td>
+            <td class="amount">₹{{ order.totalAmount }}</td>
             <td>{{ formatDate(order.orderDate) }}</td>
             <td>{{ formatDate(order.shippedDate!) }}</td>
             <td>{{ formatDate(order.deliveredDate!) }}</td>

@@ -3,18 +3,14 @@ package com.ecommerce.order.controller;
 import com.ecommerce.order.dto.OrderResponse;
 import com.ecommerce.order.dto.UserDto;
 import com.ecommerce.order.entity.Order;
-import com.ecommerce.order.entity.ShippingAddress;
 import com.ecommerce.order.enums.OrderStatus;
 import com.ecommerce.order.entity.User;
-import com.ecommerce.order.exception.ResourceNotFoundException;
 import com.ecommerce.order.repository.OrderRepository;
 import com.ecommerce.order.repository.UserRepository;
 import com.ecommerce.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +29,7 @@ public class AdminController {
     // Get all orders (admin view)
     @GetMapping("/orders")
     public ResponseEntity<List<OrderResponse>> getAllOrders() {
-        List<Order> orders = orderRepository.findAll();
-        List<OrderResponse> response = orders.stream()
-                .map(this::mapToOrderResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
     
     // Get orders by status
@@ -46,7 +38,7 @@ public class AdminController {
         OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
         List<Order> orders = orderRepository.findByStatus(orderStatus);
         List<OrderResponse> response = orders.stream()
-                .map(this::mapToOrderResponse)
+                .map(order -> orderService.getOrderById(order.getOrderId()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
@@ -99,31 +91,6 @@ public class AdminController {
         stats.put("cancelledOrders", cancelledOrders);
         
         return ResponseEntity.ok(stats);
-    }
-    
-    private OrderResponse mapToOrderResponse(Order order) {
-        String fullAddress = "";
-        if (order.getShippingAddress() != null) {
-            ShippingAddress sa = order.getShippingAddress();
-            fullAddress = String.format("%s, %s, %s %s, %s",
-                sa.getAddress() != null ? sa.getAddress() : "",
-                sa.getCity() != null ? sa.getCity() : "",
-                sa.getState() != null ? sa.getState() : "",
-                sa.getZipCode() != null ? sa.getZipCode() : "",
-                sa.getCountry() != null ? sa.getCountry() : "");
-        }
-        
-        return OrderResponse.builder()
-                .orderId(order.getOrderId())
-                .userId(order.getUser().getUserId())
-                .customerName(order.getUser().getUsername())
-                .status(order.getStatus())
-                .totalAmount(order.getTotalAmount())
-                .taxAmount(order.getTaxAmount())
-                .orderDate(order.getOrderDate())
-                .shippedDate(order.getShippedDate())
-                .deliveredDate(order.getDeliveredDate())
-                .build();
     }
     
     private UserDto mapToUserDto(User user) {

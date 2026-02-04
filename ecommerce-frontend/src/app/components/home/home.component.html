@@ -56,7 +56,7 @@
             </h3>
             <p class="product-description">{{ product.description | slice:0:60 }}...</p>
             <div class="product-footer">
-              <span class="price">${{ product.price.toFixed(2) }}</span>
+              <span class="price">₹{{ product.price.toFixed(2) }}</span>
               <button 
                 class="btn btn-primary btn-sm" 
                 (click)="addToCart(product)"

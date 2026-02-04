@@ -1,11 +1,15 @@
 export interface Order {
   orderId: number;
   userId: number;
+  customerName?: string;
   orderDate: Date;
   status: OrderStatus;
   totalAmount: number;
-  shippingAddress: string;
-  orderItems: OrderItem[];
+  taxAmount?: number;
+  shippingAddress: ShippingAddress;
+  items: OrderItem[];
+  shippedDate?: Date;
+  deliveredDate?: Date;
 }
 
 export interface OrderItem {
@@ -14,7 +18,7 @@ export interface OrderItem {
   productName: string;
   productImage: string;
   quantity: number;
-  price: number;
+  unitPrice: number;
   subtotal: number;
 }
 
