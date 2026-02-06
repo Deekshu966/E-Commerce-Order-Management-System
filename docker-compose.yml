@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: ecommerce-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root@123
+      MYSQL_DATABASE: ecommercedb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # Spring Boot Backend
+  backend:
+    build: ./order-management/order-management
+    container_name: ecommerce-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ecommercedb?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root@123
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mysql
+
+  # Angular Frontend
+  frontend:
+    build: ./ecommerce-frontend
+    container_name: ecommerce-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:
