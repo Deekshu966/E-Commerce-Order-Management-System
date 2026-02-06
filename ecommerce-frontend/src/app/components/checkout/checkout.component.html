@@ -25,18 +25,28 @@
               <input 
                 type="text" 
                 class="form-control"
+                [class.is-invalid]="touched['firstName'] && fieldErrors['firstName']"
                 [(ngModel)]="shippingAddress.firstName"
+                (blur)="onFieldBlur('firstName')"
                 placeholder="First name"
               />
+              <div class="invalid-feedback" *ngIf="touched['firstName'] && fieldErrors['firstName']">
+                {{ fieldErrors['firstName'] }}
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label">Last Name *</label>
               <input 
                 type="text" 
                 class="form-control"
+                [class.is-invalid]="touched['lastName'] && fieldErrors['lastName']"
                 [(ngModel)]="shippingAddress.lastName"
+                (blur)="onFieldBlur('lastName')"
                 placeholder="Last name"
               />
+              <div class="invalid-feedback" *ngIf="touched['lastName'] && fieldErrors['lastName']">
+                {{ fieldErrors['lastName'] }}
+              </div>
             </div>
           </div>
 
@@ -45,9 +55,14 @@
             <input 
               type="email" 
               class="form-control"
+              [class.is-invalid]="touched['email'] && fieldErrors['email']"
               [(ngModel)]="shippingAddress.email"
+              (blur)="onFieldBlur('email')"
               placeholder="Email address"
             />
+            <div class="invalid-feedback" *ngIf="touched['email'] && fieldErrors['email']">
+              {{ fieldErrors['email'] }}
+            </div>
           </div>
 
           <div class="form-group">
@@ -55,9 +70,14 @@
             <input 
               type="text" 
               class="form-control"
+              [class.is-invalid]="touched['address'] && fieldErrors['address']"
               [(ngModel)]="shippingAddress.address"
+              (blur)="onFieldBlur('address')"
               placeholder="Street address"
             />
+            <div class="invalid-feedback" *ngIf="touched['address'] && fieldErrors['address']">
+              {{ fieldErrors['address'] }}
+            </div>
           </div>
 
           <div class="form-row">
@@ -66,27 +86,42 @@
               <input 
                 type="text" 
                 class="form-control"
+                [class.is-invalid]="touched['city'] && fieldErrors['city']"
                 [(ngModel)]="shippingAddress.city"
+                (blur)="onFieldBlur('city')"
                 placeholder="City"
               />
+              <div class="invalid-feedback" *ngIf="touched['city'] && fieldErrors['city']">
+                {{ fieldErrors['city'] }}
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label">State *</label>
               <input 
                 type="text" 
                 class="form-control"
+                [class.is-invalid]="touched['state'] && fieldErrors['state']"
                 [(ngModel)]="shippingAddress.state"
+                (blur)="onFieldBlur('state')"
                 placeholder="State"
               />
+              <div class="invalid-feedback" *ngIf="touched['state'] && fieldErrors['state']">
+                {{ fieldErrors['state'] }}
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label">ZIP Code *</label>
               <input 
                 type="text" 
                 class="form-control"
+                [class.is-invalid]="touched['zipCode'] && fieldErrors['zipCode']"
                 [(ngModel)]="shippingAddress.zipCode"
+                (blur)="onFieldBlur('zipCode')"
                 placeholder="ZIP Code"
               />
+              <div class="invalid-feedback" *ngIf="touched['zipCode'] && fieldErrors['zipCode']">
+                {{ fieldErrors['zipCode'] }}
+              </div>
             </div>
           </div>
         </div>

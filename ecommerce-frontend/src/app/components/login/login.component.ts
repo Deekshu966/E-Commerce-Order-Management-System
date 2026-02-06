@@ -16,6 +16,18 @@ export class LoginComponent {
   errorMessage = '';
   isLoading = false;
 
+  // Validation error messages
+  fieldErrors = {
+    username: '',
+    password: ''
+  };
+
+  // Track if fields have been touched
+  touched = {
+    username: false,
+    password: false
+  };
+
   constructor(
     private authService: AuthService,
     private router: Router
@@ -26,14 +38,52 @@ export class LoginComponent {
     }
   }
 
+  // Real-time validation on blur
+  onFieldBlur(field: 'username' | 'password'): void {
+    this.touched[field] = true;
+    this.validateField(field);
+  }
+
+  validateField(field: 'username' | 'password'): void {
+    if (field === 'username') {
+      if (!this.username) {
+        this.fieldErrors.username = 'Username is required';
+      } else if (this.username.length < 3) {
+        this.fieldErrors.username = 'Username must be at least 3 characters';
+      } else {
+        this.fieldErrors.username = '';
+      }
+    }
+
+    if (field === 'password') {
+      if (!this.password) {
+        this.fieldErrors.password = 'Password is required';
+      } else if (this.password.length < 6) {
+        this.fieldErrors.password = 'Password must be at least 6 characters';
+      } else {
+        this.fieldErrors.password = '';
+      }
+    }
+  }
+
+  validateForm(): boolean {
+    this.touched.username = true;
+    this.touched.password = true;
+    
+    this.validateField('username');
+    this.validateField('password');
+
+    return !this.fieldErrors.username && !this.fieldErrors.password;
+  }
+
   onSubmit(): void {
-    if (!this.username || !this.password) {
-      this.errorMessage = 'Please enter both username and password';
+    this.errorMessage = '';
+    
+    if (!this.validateForm()) {
       return;
     }
 
     this.isLoading = true;
-    this.errorMessage = '';
 
     this.authService.login({ username: this.username, password: this.password })
       .subscribe({

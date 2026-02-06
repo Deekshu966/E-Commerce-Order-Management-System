@@ -13,29 +13,39 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="firstName" class="form-label">First Name</label>
+          <label for="firstName" class="form-label">First Name *</label>
           <input
             type="text"
             id="firstName"
             class="form-control"
+            [class.is-invalid]="touched['firstName'] && fieldErrors['firstName']"
             [(ngModel)]="formData.firstName"
             name="firstName"
             placeholder="First name"
+            (blur)="onFieldBlur('firstName')"
             required
           />
+          <div class="invalid-feedback" *ngIf="touched['firstName'] && fieldErrors['firstName']">
+            {{ fieldErrors['firstName'] }}
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="lastName" class="form-label">Last Name</label>
+          <label for="lastName" class="form-label">Last Name *</label>
           <input
             type="text"
             id="lastName"
             class="form-control"
+            [class.is-invalid]="touched['lastName'] && fieldErrors['lastName']"
             [(ngModel)]="formData.lastName"
             name="lastName"
             placeholder="Last name"
+            (blur)="onFieldBlur('lastName')"
             required
           />
+          <div class="invalid-feedback" *ngIf="touched['lastName'] && fieldErrors['lastName']">
+            {{ fieldErrors['lastName'] }}
+          </div>
         </div>
       </div>
 
@@ -45,11 +55,17 @@
           type="text"
           id="username"
           class="form-control"
+          [class.is-invalid]="touched['username'] && fieldErrors['username']"
           [(ngModel)]="formData.username"
           name="username"
           placeholder="Choose a username"
+          (blur)="onFieldBlur('username')"
           required
         />
+        <div class="invalid-feedback" *ngIf="touched['username'] && fieldErrors['username']">
+          {{ fieldErrors['username'] }}
+        </div>
+        <small class="form-hint" *ngIf="!fieldErrors['username']">3-50 characters, letters, numbers, and underscores only</small>
       </div>
 
       <div class="form-group">
@@ -58,11 +74,16 @@
           type="email"
           id="email"
           class="form-control"
+          [class.is-invalid]="touched['email'] && fieldErrors['email']"
           [(ngModel)]="formData.email"
           name="email"
           placeholder="Enter your email"
+          (blur)="onFieldBlur('email')"
           required
         />
+        <div class="invalid-feedback" *ngIf="touched['email'] && fieldErrors['email']">
+          {{ fieldErrors['email'] }}
+        </div>
       </div>
 
       <div class="form-row">
@@ -72,11 +93,17 @@
             type="password"
             id="password"
             class="form-control"
+            [class.is-invalid]="touched['password'] && fieldErrors['password']"
             [(ngModel)]="formData.password"
             name="password"
             placeholder="Create password"
+            (blur)="onFieldBlur('password')"
             required
           />
+          <div class="invalid-feedback" *ngIf="touched['password'] && fieldErrors['password']">
+            {{ fieldErrors['password'] }}
+          </div>
+          <small class="form-hint" *ngIf="!fieldErrors['password']">Min 6 chars, 1 uppercase, 1 number, 1 symbol</small>
         </div>
 
         <div class="form-group">
@@ -85,11 +112,16 @@
             type="password"
             id="confirmPassword"
             class="form-control"
+            [class.is-invalid]="touched['confirmPassword'] && fieldErrors['confirmPassword']"
             [(ngModel)]="confirmPassword"
             name="confirmPassword"
             placeholder="Confirm password"
+            (blur)="onFieldBlur('confirmPassword')"
             required
           />
+          <div class="invalid-feedback" *ngIf="touched['confirmPassword'] && fieldErrors['confirmPassword']">
+            {{ fieldErrors['confirmPassword'] }}
+          </div>
         </div>
       </div>
 
@@ -99,10 +131,16 @@
           type="tel"
           id="phone"
           class="form-control"
+          [class.is-invalid]="touched['phone'] && fieldErrors['phone']"
           [(ngModel)]="formData.phone"
           name="phone"
           placeholder="Enter phone number"
+          (blur)="onFieldBlur('phone')"
         />
+        <div class="invalid-feedback" *ngIf="touched['phone'] && fieldErrors['phone']">
+          {{ fieldErrors['phone'] }}
+        </div>
+        <small class="form-hint" *ngIf="!fieldErrors['phone']">Optional - 10 digits</small>
       </div>
 
       <div class="form-group">

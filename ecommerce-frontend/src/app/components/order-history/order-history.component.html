@@ -56,10 +56,10 @@
 
     <!-- Orders List -->
     <div class="orders-list" *ngIf="!isLoading && filteredOrders.length > 0">
-      <div class="order-card" *ngFor="let order of filteredOrders">
+      <div class="order-card" *ngFor="let order of filteredOrders; let i = index">
         <div class="order-header">
           <div class="order-info">
-            <span class="order-id">Order #{{ order.orderId }}</span>
+            <span class="order-id">Order #{{ i + 1 }}</span>
             <span class="order-date">{{ formatDate(order.orderDate) }}</span>
           </div>
           <div class="order-status" [ngClass]="getStatusClass(order.status)">

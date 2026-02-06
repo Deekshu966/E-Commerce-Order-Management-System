@@ -43,11 +43,3 @@ Login Credentials:
 | admin       | admin123    | ADMIN |
 | john_doe    | password123 | USER  |
 | jane_smith  | password123 | USER  |
-
-============================================
-STOP THE APPLICATIONS
-============================================
-
-Press Ctrl+C in each terminal to stop the servers.
-
-============================================
