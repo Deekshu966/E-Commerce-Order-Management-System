@@ -86,34 +86,72 @@ export class PaymentComponent implements OnInit {
   }
 
   formatCVV(event: any): void {
-    // Only allow digits
+    // Only allow digits, max 3
     let value = event.target.value.replace(/\D/g, '');
-    this.paymentInfo.cvv = value.substring(0, 4);
+    this.paymentInfo.cvv = value.substring(0, 3);
   }
 
   validatePayment(): boolean {
     const cleanCardNumber = this.paymentInfo.cardNumber.replace(/\s/g, '');
     
-    // Only check that card number contains digits and has minimum length
-    if (!cleanCardNumber || cleanCardNumber.length < 13) {
-      this.errorMessage = 'Please enter a card number (minimum 13 digits)';
-      return false;
-    }
-
-    // Check if card number contains only digits
+    // Check if card number contains only digits (no alphabets)
     if (!/^\d+$/.test(cleanCardNumber)) {
-      this.errorMessage = 'Card number must contain only numbers';
+      this.errorMessage = 'Card number must contain only numbers (no alphabets)';
       return false;
     }
 
+    // Card number must be exactly 16 digits
+    if (!cleanCardNumber || cleanCardNumber.length < 16) {
+      this.errorMessage = 'Card number must be 16 digits';
+      return false;
+    }
+
+    if (cleanCardNumber.length !== 16) {
+      this.errorMessage = 'Card number must be exactly 16 digits';
+      return false;
+    }
+
+    // Validate expiry date format
     if (!this.paymentInfo.expiryDate || this.paymentInfo.expiryDate.length < 5) {
       this.errorMessage = 'Please enter expiry date (MM/YY)';
       return false;
     }
 
-    // CVV must be 3-4 digits
-    if (!this.paymentInfo.cvv || !/^\d{3,4}$/.test(this.paymentInfo.cvv)) {
-      this.errorMessage = 'Please enter a valid CVV (3-4 digits)';
+    // Check expiry date format and validate future date
+    const expiryParts = this.paymentInfo.expiryDate.split('/');
+    if (expiryParts.length !== 2) {
+      this.errorMessage = 'Invalid expiry date format. Use MM/YY';
+      return false;
+    }
+
+    const month = parseInt(expiryParts[0], 10);
+    const year = parseInt(expiryParts[1], 10);
+
+    // Validate month is between 1-12
+    if (isNaN(month) || month < 1 || month > 12) {
+      this.errorMessage = 'Invalid expiry month. Must be between 01-12';
+      return false;
+    }
+
+    // Validate year is numeric
+    if (isNaN(year)) {
+      this.errorMessage = 'Invalid expiry year';
+      return false;
+    }
+
+    // Check if expiry date is in the future
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear() % 100; // Get last 2 digits
+    const currentMonth = currentDate.getMonth() + 1; // 0-indexed
+
+    if (year < currentYear || (year === currentYear && month < currentMonth)) {
+      this.errorMessage = 'Card has expired. Please use a card with a future expiry date';
+      return false;
+    }
+
+    // CVV must be exactly 3 digits only (no alphabets)
+    if (!this.paymentInfo.cvv || !/^\d{3}$/.test(this.paymentInfo.cvv)) {
+      this.errorMessage = 'CVV must be exactly 3 digits';
       return false;
     }
 

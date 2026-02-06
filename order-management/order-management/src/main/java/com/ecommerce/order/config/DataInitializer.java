@@ -6,6 +6,7 @@ import com.ecommerce.order.repository.ProductRepository;
 import com.ecommerce.order.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -17,6 +18,7 @@ public class DataInitializer implements CommandLineRunner {
     
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     
     @Override
     public void run(String... args) {
@@ -24,7 +26,7 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.findByUsername("admin").isEmpty()) {
             User admin = User.builder()
                     .username("admin")
-                    .password("admin123")
+                    .password(passwordEncoder.encode("admin123"))
                     .email("admin@example.com")
                     .firstName("Admin")
                     .lastName("User")
@@ -33,7 +35,7 @@ public class DataInitializer implements CommandLineRunner {
                     .role("ADMIN")
                     .build();
             userRepository.save(admin);
-            System.out.println("Admin user created: admin / admin123");
+            System.out.println("Admin user created: admin / admin123 (BCrypt encrypted)");
         }
         
         // Update existing users without role to have USER role
@@ -49,7 +51,7 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.count() <= 1) {
             User user1 = User.builder()
                     .username("john_doe")
-                    .password("password123")
+                    .password(passwordEncoder.encode("password123"))
                     .email("john@example.com")
                     .firstName("John")
                     .lastName("Doe")
@@ -60,7 +62,7 @@ public class DataInitializer implements CommandLineRunner {
             
             User user2 = User.builder()
                     .username("jane_smith")
-                    .password("password123")
+                    .password(passwordEncoder.encode("password123"))
                     .email("jane@example.com")
                     .firstName("Jane")
                     .lastName("Smith")
@@ -79,42 +81,42 @@ public class DataInitializer implements CommandLineRunner {
                     .name("Wireless Bluetooth Headphones")
                     .price(new BigDecimal("79.99"))
                     .description("High-quality wireless headphones with noise cancellation")
-                    .image("https://via.placeholder.com/300x300?text=Headphones")
+                    .image("assets/images/products/headphones.jpg")
                     .stock(50)
                     .build(),
                 Product.builder()
                     .name("Smart Watch Pro")
                     .price(new BigDecimal("199.99"))
                     .description("Advanced smartwatch with health monitoring features")
-                    .image("https://via.placeholder.com/300x300?text=Smart+Watch")
+                    .image("assets/images/products/smartwatch.jpg")
                     .stock(30)
                     .build(),
                 Product.builder()
                     .name("Laptop Stand")
                     .price(new BigDecimal("45.99"))
                     .description("Ergonomic aluminum laptop stand for better posture")
-                    .image("https://via.placeholder.com/300x300?text=Laptop+Stand")
+                    .image("assets/images/products/laptop-stand.jpg")
                     .stock(100)
                     .build(),
                 Product.builder()
                     .name("Mechanical Keyboard")
                     .price(new BigDecimal("129.99"))
                     .description("RGB mechanical keyboard with Cherry MX switches")
-                    .image("https://via.placeholder.com/300x300?text=Keyboard")
+                    .image("assets/images/products/keyboard.jpg")
                     .stock(25)
                     .build(),
                 Product.builder()
                     .name("Wireless Mouse")
                     .price(new BigDecimal("39.99"))
                     .description("Ergonomic wireless mouse with precision tracking")
-                    .image("https://via.placeholder.com/300x300?text=Mouse")
+                    .image("assets/images/products/mouse.jpg")
                     .stock(75)
                     .build(),
                 Product.builder()
                     .name("USB-C Hub")
                     .price(new BigDecimal("59.99"))
                     .description("7-in-1 USB-C hub with HDMI and SD card reader")
-                    .image("https://via.placeholder.com/300x300?text=USB+Hub")
+                    .image("assets/images/products/usb-hub.jpg")
                     .stock(40)
                     .build()
             };

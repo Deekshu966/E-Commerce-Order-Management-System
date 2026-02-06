@@ -38,7 +38,7 @@
         <div class="payment-form">
           <div class="form-section">
             <h2>Payment Information</h2>
-            <p class="secure-badge">🔒 Test Mode - Enter any numbers</p>
+            <p class="secure-badge">🔒 Secure Payment</p>
 
             <div class="alert alert-danger" *ngIf="errorMessage">
               {{ errorMessage }}
@@ -54,13 +54,14 @@
                 placeholder="1234 5678 9012 3456"
                 maxlength="19"
                 inputmode="numeric"
+                pattern="[0-9\s]*"
               />
-              <small class="form-hint">Enter any 13-16 digit number</small>
+              <small class="form-hint">16 digits, numbers only</small>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Expiry *</label>
+                <label class="form-label">Expiry Date *</label>
                 <input 
                   type="text" 
                   class="form-control"
@@ -69,7 +70,9 @@
                   placeholder="MM/YY"
                   maxlength="5"
                   inputmode="numeric"
+                  pattern="[0-9/]*"
                 />
+                <small class="form-hint">Must be a future date</small>
               </div>
               <div class="form-group">
                 <label class="form-label">CVV *</label>
@@ -78,10 +81,12 @@
                   class="form-control"
                   [(ngModel)]="paymentInfo.cvv"
                   placeholder="123"
-                  maxlength="4"
+                  maxlength="3"
                   inputmode="numeric"
+                  pattern="[0-9]*"
                   (input)="formatCVV($event)"
                 />
+                <small class="form-hint">3 digits only</small>
               </div>
             </div>
           </div>

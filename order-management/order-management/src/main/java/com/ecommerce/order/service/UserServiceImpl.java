@@ -7,6 +7,7 @@ import com.ecommerce.order.entity.User;
 import com.ecommerce.order.exception.ResourceNotFoundException;
 import com.ecommerce.order.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
     
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     
     @Override
     public UserDto register(RegisterRequest request) {
@@ -29,7 +31,7 @@ public class UserServiceImpl implements UserService {
         
         User user = User.builder()
                 .username(request.getUsername())
-                .password(request.getPassword()) // In real app, hash the password
+                .password(passwordEncoder.encode(request.getPassword())) // BCrypt encrypted
                 .email(request.getEmail())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -47,8 +49,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         
-        // In real app, use password encoder to verify
-        if (!user.getPassword().equals(request.getPassword())) {
+        // BCrypt password verification
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Invalid credentials");
         }
         
