@@ -92,8 +92,11 @@ export class CheckoutComponent implements OnInit {
   validateField(field: string): void {
     switch (field) {
       case 'firstName':
+        const firstNamePattern = /^[a-zA-Z\s-]+$/;
         if (!this.shippingAddress.firstName) {
           this.fieldErrors['firstName'] = 'First name is required';
+        } else if (!firstNamePattern.test(this.shippingAddress.firstName)) {
+          this.fieldErrors['firstName'] = 'First name can only contain letters';
         } else if (this.shippingAddress.firstName.length < 2) {
           this.fieldErrors['firstName'] = 'First name must be at least 2 characters';
         } else {
@@ -102,8 +105,11 @@ export class CheckoutComponent implements OnInit {
         break;
 
       case 'lastName':
+        const lastNamePattern = /^[a-zA-Z\s-]+$/;
         if (!this.shippingAddress.lastName) {
           this.fieldErrors['lastName'] = 'Last name is required';
+        } else if (!lastNamePattern.test(this.shippingAddress.lastName)) {
+          this.fieldErrors['lastName'] = 'Last name can only contain letters';
         } else if (this.shippingAddress.lastName.length < 2) {
           this.fieldErrors['lastName'] = 'Last name must be at least 2 characters';
         } else {
@@ -133,8 +139,11 @@ export class CheckoutComponent implements OnInit {
         break;
 
       case 'city':
+        const cityPattern = /^[a-zA-Z\s-]+$/;
         if (!this.shippingAddress.city) {
           this.fieldErrors['city'] = 'City is required';
+        } else if (!cityPattern.test(this.shippingAddress.city)) {
+          this.fieldErrors['city'] = 'City can only contain letters';
         } else if (this.shippingAddress.city.length < 2) {
           this.fieldErrors['city'] = 'Please enter a valid city name';
         } else {
@@ -143,8 +152,11 @@ export class CheckoutComponent implements OnInit {
         break;
 
       case 'state':
+        const statePattern = /^[a-zA-Z\s-]+$/;
         if (!this.shippingAddress.state) {
           this.fieldErrors['state'] = 'State is required';
+        } else if (!statePattern.test(this.shippingAddress.state)) {
+          this.fieldErrors['state'] = 'State can only contain letters';
         } else if (this.shippingAddress.state.length < 2) {
           this.fieldErrors['state'] = 'Please enter a valid state';
         } else {

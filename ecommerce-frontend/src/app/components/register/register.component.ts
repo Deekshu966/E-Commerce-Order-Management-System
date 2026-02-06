@@ -61,8 +61,11 @@ export class RegisterComponent {
   validateField(field: string): void {
     switch (field) {
       case 'firstName':
+        const firstNamePattern = /^[a-zA-Z\s-]+$/;
         if (!this.formData.firstName) {
           this.fieldErrors['firstName'] = 'First name is required';
+        } else if (!firstNamePattern.test(this.formData.firstName)) {
+          this.fieldErrors['firstName'] = 'First name can only contain letters';
         } else if (this.formData.firstName.length < 2) {
           this.fieldErrors['firstName'] = 'First name must be at least 2 characters';
         } else {
@@ -71,8 +74,11 @@ export class RegisterComponent {
         break;
 
       case 'lastName':
+        const lastNamePattern = /^[a-zA-Z\s-]+$/;
         if (!this.formData.lastName) {
           this.fieldErrors['lastName'] = 'Last name is required';
+        } else if (!lastNamePattern.test(this.formData.lastName)) {
+          this.fieldErrors['lastName'] = 'Last name can only contain letters';
         } else if (this.formData.lastName.length < 2) {
           this.fieldErrors['lastName'] = 'Last name must be at least 2 characters';
         } else {
