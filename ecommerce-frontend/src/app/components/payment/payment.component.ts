@@ -96,7 +96,7 @@ export class PaymentComponent implements OnInit {
     
     // Check if card number contains only digits (no alphabets)
     if (!/^\d+$/.test(cleanCardNumber)) {
-      this.errorMessage = 'Card number must contain only numbers (no alphabets)';
+      this.errorMessage = 'Card number must contain only numbers no alphabets and symbols';
       return false;
     }
 
