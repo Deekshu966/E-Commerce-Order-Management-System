@@ -332,3 +332,28 @@ docker-compose up --build -d
                     │ method      │
                     │ card_last_4 │
                     └─────────────┘
+---
+
+## 🗄️ screenshots
+```
+
+<img width="1919" height="880" alt="Screenshot 2026-02-05 123521" src="https://github.com/user-attachments/assets/aaf7b12d-df32-4667-9773-8d3e62130ad0" />
+<img width="1919" height="881" alt="Screenshot 2026-02-05 123543" src="https://github.com/user-attachments/assets/26cc4516-e59f-4b4a-ab86-15db3f3a94d4" />
+<img width="1910" height="883" alt="Screenshot 2026-02-05 123748" src="https://github.com/user-attachments/assets/72cbd00e-3ac3-47c4-8bf4-d3abd69666a1" />
+<img width="1913" height="860" alt="Screenshot 2026-02-05 124218" src="https://github.com/user-attachments/assets/ea63daa0-95a5-4e84-a4be-0a18716190e4" />
+<img width="1912" height="755" alt="Screenshot 2026-02-05 124234" src="https://github.com/user-attachments/assets/43f4a1a3-dd69-4896-a662-f7f82cb24feb" />
+<img width="829" height="832" alt="Screenshot 2026-02-05 124328" src="https://github.com/user-attachments/assets/7ba37bb3-fd08-46a0-8159-f97b4e79e3e6" />
+<img width="1866" height="753" alt="Screenshot 2026-02-05 125533" src="https://github.com/user-attachments/assets/8e57682d-ec87-445e-8585-a2d4ad40a005" />
+<img width="1919" height="934" alt="Screenshot 2026-02-06 151124" src="https://github.com/user-attachments/assets/b9faf5c3-18d6-4513-a57e-47d91842ae40" />
+<img width="1911" height="641" alt="Screenshot 2026-02-06 223139" src="https://github.com/user-attachments/assets/ef3cc079-9d3e-4616-be3a-f1799bfd30e0" />
+<img width="1920" height="1080" alt="Screenshot 2026-02-06 224729" src="https://github.com/user-attachments/assets/64a95fda-e261-400e-b5cc-ce30f2019e88" />
+<img width="1920" height="1080" alt="Screenshot 2026-02-06 224935" src="https://github.com/user-attachments/assets/2b70c976-5dd8-47e0-a58e-91d8412579b8" />
+
+
+
+
+
+
+
+
+
